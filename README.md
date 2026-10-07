@@ -19,7 +19,7 @@ Set your Gemini API key in the project-root `.env` file:
 GEMINI_API_KEY=your_gemini_api_key
 ```
 
-Do not commit this file; it is excluded by `.gitignore`.
+¡¡Do not commit .env!! It's excluded by `.gitignore`.
 
 ## Structure 
 
@@ -28,8 +28,8 @@ python agent.py
 
 # Your own job + profile
 python agent.py \
-  --job-desc "$(cat job_posting.txt)" \
-  --candidate "$(cat my_profile.txt)"
+  --JOB DESCRIPTION: "sample_job.md" \
+  --CANDIDATE: "candidate.md"
 ```
 
 ## Output includes
