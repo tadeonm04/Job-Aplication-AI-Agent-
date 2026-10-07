@@ -13,7 +13,7 @@ pip install -r requirements.txt
 
 ## Configuration
 
-Set your Gemini API key in the project-root `.env` file:
+#### Set your Gemini API key in the project-root `.env` file:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
@@ -21,14 +21,21 @@ GEMINI_API_KEY=your_gemini_api_key
 
 ¡¡Do not commit .env!! It's excluded by `.gitignore`.
 
+#### Modify 
+```
+candidate.md 
+sample_job.md 
+```
+based in job description and curriculum vitae information 
+
 ## Structure 
 
 ```bash
 python agent.py
 
 # Your own job + profile
-python agent.py \
-  --JOB DESCRIPTION: "sample_job.md" \
+python agent.py 
+  --JOB DESCRIPTION: "sample_job.md" 
   --CANDIDATE: "candidate.md"
 ```
 

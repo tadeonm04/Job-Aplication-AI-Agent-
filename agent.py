@@ -52,6 +52,7 @@ Extract: top 5 required skills, culture signals, what this company values most, 
 {candidate_profile}
 
 Produce:
+0. Ranking of candidate's fit for this role (1-10)
 1. COVER LETTER (250-300 words, 3 paragraphs: hook, evidence, close)
 2. TOP 5 RESUME BULLETS TO HIGHLIGHT (tailored to this specific role)
 3. NEGOTIATION RANGE ESTIMATE based on role seniority, country and company
