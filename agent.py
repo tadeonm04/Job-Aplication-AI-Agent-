@@ -1,57 +1,26 @@
 """
-Job Application Agent using CrewAI.
-
-Analyzes a job description and a candidate profile, then generates:
+Analyzes a job description and a CV, then generates:
 - Tailored cover letter
 - Resume bullet points to highlight
 - Interview preparation questions
 
-Usage:
-    python agent.py --job-desc "Senior Python Engineer at Stripe..." --candidate "7 years Python, FastAPI..."
 """
 
 import argparse
-import os
+from pathlib import Path
 
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, LLM, Process, Task
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
-SAMPLE_JOB = """Senior Python Engineer at Stripe
-We're looking for a Senior Python Engineer to join our API Platform team.
-
-Requirements:
-- 5+ years Python development
-- Experience with distributed systems
-- Strong understanding of REST APIs and microservices
-- Experience with PostgreSQL, Redis
-- Kubernetes experience preferred
-- Strong communication skills
-
-Responsibilities:
-- Design and build high-performance APIs handling millions of requests/day
-- Lead technical design reviews
-- Mentor junior engineers
-- Collaborate with product managers on technical feasibility
-"""
-
-SAMPLE_CANDIDATE = """
-Jane Doe — 7 years Python experience
-Current role: Senior Software Engineer at DataCorp
-Skills: Python, FastAPI, Django, PostgreSQL, Redis, Docker, Kubernetes, AWS
-Achievements:
-- Built API platform handling 5M requests/day
-- Led team of 4 engineers
-- Reduced API latency by 40%
-- Mentored 3 junior engineers
-Education: BS Computer Science, UC Berkeley
-"""
+SAMPLE_DIR = Path(__file__).resolve().parent
+SAMPLE_JOB = (SAMPLE_DIR / "sample_job.md").read_text(encoding="utf-8")
+SAMPLE_CANDIDATE = (SAMPLE_DIR / "candidate.md").read_text(encoding="utf-8")
 
 
 def run_job_application_crew(job_desc: str, candidate_profile: str) -> str:
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.4)
+    llm = LLM(model="gemini/gemini-3.5-flash-lite")
 
     analyst = Agent(
         role="Job Requirements Analyst",
@@ -85,8 +54,9 @@ Extract: top 5 required skills, culture signals, what this company values most, 
 Produce:
 1. COVER LETTER (250-300 words, 3 paragraphs: hook, evidence, close)
 2. TOP 5 RESUME BULLETS TO HIGHLIGHT (tailored to this specific role)
-3. 10 LIKELY INTERVIEW QUESTIONS (5 behavioral, 5 technical) with suggested answer frameworks
-4. NEGOTIATION RANGE ESTIMATE based on role seniority and company""",
+3. NEGOTIATION RANGE ESTIMATE based on role seniority, country and company
+10 LIKELY INTERVIEW QUESTIONS (5 behavioral, 5 technical) with suggested answer frameworks""",
+
         agent=writer,
         expected_output="Cover letter, resume bullets, interview questions, salary range",
         context=[analyst_task],
@@ -112,7 +82,7 @@ def main():
     result = run_job_application_crew(args.job_desc, args.candidate)
 
     print("=" * 60)
-    print("📋 JOB APPLICATION PACKAGE")
+    print(" JOB APPLICATION PACKAGE")
     print("=" * 60)
     print(result)
 

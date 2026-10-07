@@ -5,17 +5,25 @@ CrewAI agent that generates a complete job application package: cover letter, ta
 **Framework**: CrewAI  
 **LLM**: Gemini 3.5-flash-lite 
 
-## Setup
+## Environment Installation
 
 ```bash
 pip install -r requirements.txt
-cp .env.example .env
 ```
 
-## Run
+## Configuration
+
+Set your Gemini API key in the project-root `.env` file:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+Do not commit this file; it is excluded by `.gitignore`.
+
+## Structure 
 
 ```bash
-# Uses built-in sample
 python agent.py
 
 # Your own job + profile
@@ -28,5 +36,5 @@ python agent.py \
 
 - Tailored cover letter (250-300 words)
 - Top 5 resume bullets to highlight
-- 10 interview questions with answer frameworks
 - Salary negotiation range
+- 10 interview questions with answer frameworks
